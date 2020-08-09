@@ -1,0 +1,36 @@
+{
+  "name": "yuucli",
+  "version": "1.0.0",
+  "description": "YuuCli is build tools for interactive command line interface.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "command",
+    "line",
+    "cli",
+    "build",
+    "tools",
+    "tty",
+    "terminal",
+    "interaction",
+    "ui",
+    "macos",
+    "windows",
+    "linux",
+    "nodejs",
+    "yuucli",
+    "tokisakiyuu"
+  ],
+  "author": "tokisakiyuu",
+  "license": "MIT",
+  "dependencies": {
+    "ansi-escapes": "^4.3.1",
+    "cli-cursor": "^3.1.0",
+    "observer-util-wheel": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13"
+  }
+}
