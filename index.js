@@ -11,6 +11,7 @@ const rl = readline.createInterface({
   terminal: true
 });
 
+cliCursor.hide();
 
 let list = ["张三", "李四", "王五"];
 let curr = 0;
@@ -58,3 +59,9 @@ rl.input.on("keypress", (i, b) => {
     render(rl);
     return true;
 })
+
+
+process.on("SIGINT", () => {
+    cliCursor.show();
+    process.exit(0);
+});
