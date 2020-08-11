@@ -1,9 +1,9 @@
 let net = require('net');
-let path = require('path');
+let {FIFO_NAME} = require('./utils');
 
 let client= new net.Socket();
 client.setEncoding('binary');
-client.connect(path.join('\\\\?\\pipe','\\getAppListDesktop'),function () {
+client.connect(FIFO_NAME,function () {
     //client给server发送数据
     client.write("hello");
     setInterval(() => {
