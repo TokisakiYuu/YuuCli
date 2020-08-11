@@ -13,12 +13,11 @@ let viewportLines = 1;
  * @param {*} interface 
  */
 function draw(content = "", interface) {
-  // interface.output.unmute();
+  interface.output.unmute();
   interface.output.write(ansiEscapes.eraseLines(viewportLines));
   viewportLines = getContentLines(content);
   interface.output.write(content);
-  // interface.output.mute();
-  console.log("console.log", viewportLines);
+  interface.output.mute();
 }
 
 function getContentLines(content) {
