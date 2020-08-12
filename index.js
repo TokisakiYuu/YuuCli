@@ -1,4 +1,5 @@
 const {createViewport} = require("./createViewport");
+const {log} = require("./debug");
 
 let port = createViewport();
 
@@ -10,3 +11,5 @@ setInterval(() => {
 }, 1000)
 
 port.on("close", () => {});
+
+port.on("keypress", e => log(e));
