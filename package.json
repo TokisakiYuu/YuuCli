@@ -2,7 +2,7 @@
   "name": "yuucli",
   "version": "1.0.0",
   "description": "YuuCli is build tools for interactive command line interface.",
-  "main": "dist/index.js",
+  "main": "index.js",
   "types": "types/index.d.ts",
   "files": [
     "./**",

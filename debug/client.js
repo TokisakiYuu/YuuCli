@@ -14,21 +14,24 @@ const msStdoout = new MuteStream();
 msStdoout.pipe(process.stdout);
 msStdoout.mute();
 
-let client= new net.Socket();
-client.setEncoding('utf-8');
-client.connect(FIFO_NAME,function () {
+let socket = new net.Socket();
+socket.setEncoding('utf-8');
+socket.connect(FIFO_NAME,function () {
     cliCursor.hide();
     console.log(`${DEBUG_CLIENT_WORD} ${colors.green('Connected to Debug server, Message from the server:')}`);
 });
-client.on('data', data => {
-    let dataObj = JSON.parse(data);
-    console.log(`${LOG} ${makeNowTime()}`);
-    jsonBeautify(dataObj);
+socket.on('data', data => {
+    console.log(data);
+    console.log("==========");
+    // let dataObj = JSON.parse(data);
+    // console.log(dataObj);
+    // console.log(`${LOG} ${makeNowTime()}`);
+    // jsonBeautify(dataObj);
 });
-client.on('close', () => {
+socket.on('close', () => {
     console.log(`${DEBUG_CLIENT_WORD} Connection closed`);
 });
-client.on('error', error => {
+socket.on('error', error => {
     console.log(`${DEBUG_CLIENT_WORD} ${colors.red(error)}`);
 })
 
@@ -45,7 +48,7 @@ function makeNowTime() {
 
 function processExitHandle(code) {
     // 关掉客户端连接
-    client.end();
+    socket.end();
     // 显示光标
     cliCursor.show();
     // 此进程的父进程就是终端，所以parent precess id就是终端进程id
