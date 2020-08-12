@@ -1,5 +1,4 @@
 const {Worker} = require('worker_threads');
-const colors = require('colors');
 
 const worker = new Worker(__dirname + "/debugShell.js");
 let workerAlive = true;
@@ -17,8 +16,6 @@ worker.on("exit", onWorkerExit);
 function log(json) {
   if(workerAlive) {
     worker.postMessage(JSON.stringify(json));
-  } else {
-    console.warn(colors.red("Has lost connection with Debug terminal"));
   }
 }
 

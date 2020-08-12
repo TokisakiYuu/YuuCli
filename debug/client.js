@@ -20,16 +20,15 @@ client.connect(FIFO_NAME,function () {
     cliCursor.hide();
     console.log(`${DEBUG_CLIENT_WORD} ${colors.green('Connected to Debug server, Message from the server:')}`);
 });
-client.on('data', function(data){
+client.on('data', data => {
     let dataObj = JSON.parse(data);
     console.log(`${LOG} ${makeNowTime()}`);
-    // 服务端发来的任何消息都只做打印，因为这个客户端的作用就是显示消息而已
     jsonBeautify(dataObj);
 });
-client.on('close', function(){
+client.on('close', () => {
     console.log(`${DEBUG_CLIENT_WORD} Connection closed`);
 });
-client.on('error', function(error){
+client.on('error', error => {
     console.log(`${DEBUG_CLIENT_WORD} ${colors.red(error)}`);
 })
 

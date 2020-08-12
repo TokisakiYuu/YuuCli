@@ -1,15 +1,19 @@
-const {createViewport} = require("./createViewport");
+const viewport = require('./viewport');
 const {log} = require("./debug");
 
-let port = createViewport();
+viewport.draw("你好");
+
+log("123456");
+
+log("123456");
 
 
-port.draw("时钟：");
-setInterval(() => {
-    let date = new Date();
-    port.draw(`${date.getHours()}点${date.getMinutes()}分${date.getSeconds()}秒${date.getMilliseconds()}毫秒`);
-}, 1000)
+log("123456");
 
-port.on("close", () => {});
+log("123456");
 
-port.on("keypress", e => log(e));
+log("123456");
+
+log("123456");
+
+log("123456");
