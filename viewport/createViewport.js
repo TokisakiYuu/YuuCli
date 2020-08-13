@@ -12,6 +12,7 @@ function createViewport() {
 function createReadlineInterface() {
   const msStdoout = new MuteStream();
   msStdoout.pipe(process.stdout);
+  msStdoout.mute();
   const rl = readline.createInterface({
     input: process.stdin,
     output: msStdoout,

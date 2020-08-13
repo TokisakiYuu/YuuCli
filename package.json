@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "YuuCli is build tools for interactive command line interface.",
   "main": "index.js",
-  "types": "types/index.d.ts",
-  "files": [
-    "./**",
-    "types"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TokisakiYuu/YuuCli.git"

@@ -25,7 +25,7 @@ socket.on('data', data => {
     // 此处可能会收到多条消息，用\n隔开
     let blocks = data.split("\n");
     blocks
-        .filter(block => block)
+        .filter(block => block.length > 0)
         .forEach(block => {
             let dataObj = JSON.parse(block);
             console.log(`${LOG} ${makeNowTime()}`);
