@@ -20,13 +20,17 @@ socket.connect(FIFO_NAME,function () {
     cliCursor.hide();
     console.log(`${DEBUG_CLIENT_WORD} ${colors.green('Connected to Debug server, Message from the server:')}`);
 });
+
 socket.on('data', data => {
-    console.log(data);
-    console.log("==========");
-    // let dataObj = JSON.parse(data);
-    // console.log(dataObj);
-    // console.log(`${LOG} ${makeNowTime()}`);
-    // jsonBeautify(dataObj);
+    // 此处可能会收到多条消息，用\n隔开
+    let blocks = data.split("\n");
+    blocks
+        .filter(block => block)
+        .forEach(block => {
+            let dataObj = JSON.parse(block);
+            console.log(`${LOG} ${makeNowTime()}`);
+            jsonBeautify(dataObj);
+        })
 });
 socket.on('close', () => {
     console.log(`${DEBUG_CLIENT_WORD} Connection closed`);

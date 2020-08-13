@@ -13,6 +13,9 @@ let viewportLines = 1;
  * @param {*} interface 
  */
 function draw(content = "", interface) {
+  if(typeof content !== 'string') {
+    content = String(content);
+  }
   interface.output.unmute();
   interface.output.write(ansiEscapes.eraseLines(viewportLines));
   viewportLines = getContentLines(content);
