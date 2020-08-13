@@ -14,5 +14,5 @@ viewport.on("keypress", e => {
         body += e.code;
     }
     viewport.draw(body);
-    log(keyname);
+    log(e);
 });

@@ -30,6 +30,13 @@ server.on("error", err => console.log(`[${colors.gray('DEBUG SERVER')}] ${colors
 
 function onClientDisconnectOrProcessExit(code) {
 	server.close();
+	let exitHandles = Array.from(new Set([
+		...process.listeners('exit'),
+		...process.listeners('SIGINT')
+	]));
+	if(exitHandles.length === 2 && exitHandles[0] === onClientDisconnectOrProcessExit) {
+		process.exit(code);
+	}
 }
 process.on('SIGINT', onClientDisconnectOrProcessExit);
 process.on('exit', onClientDisconnectOrProcessExit);
