@@ -23,7 +23,6 @@ function createReadlineInterface() {
   rl.on('SIGINT', () => {
     rl.close();
     process.kill(process.pid, 'SIGINT');
-    console.log('');
   })
   return rl;
 }
@@ -37,6 +36,8 @@ function initViewprot(interface) {
     this.draw = content => draw(content, interface);
     this.close = () => interface.close();
     this.output = interface.output;
+    this.showCursor = () => cliCursor.show();
+    this.hideCursor = () => cliCursor.hide();
   };
   // 隐藏光标
   cliCursor.hide();
@@ -45,6 +46,11 @@ function initViewprot(interface) {
   // 增加事件模型
   let eventModel = bindEventModel(interface);
   Object.assign(viewport, eventModel);
+  // 监听视口大小变化
+  process.stdout.on('resize', () => {
+    let {columns, rows} = process.stdout;
+    viewport.emit('resize', {columns, rows});
+  });
   return viewport;
 }
 

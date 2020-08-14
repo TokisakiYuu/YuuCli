@@ -8,11 +8,11 @@ let FIFO_NAME;
 let TERMINAL_LAUNCH_COMMOND;
 
 if(platform === "darwin" || platform === "linux") {
-    FIFO_NAME = "/tmp/yuucli_tokisakiyuu@qq_com.sock";
-    TERMINAL_LAUNCH_COMMOND = "reset;node client.js -debug helper";
+    FIFO_NAME = "/tmp/yuucli_tokisakiyuu_at_qq_com.sock";
+    TERMINAL_LAUNCH_COMMOND = `reset;node client.js`;
 } else if(platform === "win32") {
-    FIFO_NAME = path.join('\\\\?\\pipe','\\yuucli_tokisakiyuu@qq_com.fifo');
-    TERMINAL_LAUNCH_COMMOND = "node client.js -debug helper";
+    FIFO_NAME = path.join('\\\\?\\pipe','\\yuucli_tokisakiyuu_at_qq_com.fifo');
+    TERMINAL_LAUNCH_COMMOND = "node client.js";
 }
 
 // 打开客户端

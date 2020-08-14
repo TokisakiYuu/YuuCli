@@ -5,6 +5,8 @@ const colors = require('colors');
 const { jsonBeautify } = require('beautify-json')
 let {FIFO_NAME} = require('./utils');
 
+process.title = "YuuCli Debug Terminal";
+
 const LOG = `[${colors.green('LOG')}]`;
 const DEBUG_CLIENT_WORD = `[${colors.gray('DEBUG CLIENT')}]`;
 const RUNTIME_ERROR = `[${colors.red('RUNTIME_ERROR')}]`
@@ -34,6 +36,7 @@ socket.on('data', data => {
 });
 socket.on('close', () => {
     console.log(`${DEBUG_CLIENT_WORD} Connection closed`);
+    processExitHandle(0);
 });
 socket.on('error', error => {
     console.log(`${DEBUG_CLIENT_WORD} ${colors.red(error)}`);
@@ -50,15 +53,15 @@ function makeNowTime() {
 }
 
 
-function processExitHandle(code) {
+function processExitHandle() {
     // 关掉客户端连接
     socket.end();
     // 显示光标
     cliCursor.show();
-    // 此进程的父进程就是终端，所以parent precess id就是终端进程id
-    // 关掉终端窗口
+    // 退出cmd进程(终端窗口)
     process.kill(process.ppid);
-    process.exit(code);
+    // 退出node进程
+    process.kill(process.pid);
 }
 
 process.on('SIGINT', processExitHandle);

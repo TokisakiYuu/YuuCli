@@ -16,7 +16,7 @@ let logMessageQueue = new Set();
 // 创建IPC服务器
 let server = net.createServer(connect => {
 	connect.setEncoding('utf-8');
-	connect.on('close', onClientDisconnectOrProcessExit);
+	connect.on('close', () => {});
 	connect.on('error', err => {});
 	connect.on("data", data => {});
 	socket = connect;
@@ -27,6 +27,7 @@ let server = net.createServer(connect => {
 });
 
 server.on("error", err => console.log(`[${colors.gray('DEBUG SERVER')}] ${colors.red(err)}`));
+server.on("close", onClientDisconnectOrProcessExit);
 
 function onClientDisconnectOrProcessExit(code) {
 	server.close();
