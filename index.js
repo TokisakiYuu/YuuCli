@@ -1,19 +1,33 @@
-const viewport = require('./viewport');
-const {log} = require("./debug");
+let viewport = require('./viewport');
+let {log} = require('./debug');
+let {observable, observe} = require('observer-util-wheel');
 
-// viewport.on("keypress", e => {
-//     // let keyname = e.desc.name;
-//     // if(keyname === "backspace") {
-//     //     body = body.substring(0, body.length - 1);
-//     // } else {
-//     //     body += e.code;
-//     // }
-//     if(e.desc.name === "backspace") {
-//         viewport.showCursor();
-//     }
-//     if(e.desc.name === "return") {
-//         viewport.hideCursor();
-//     }
-//     viewport.draw(e.code);
-//     log(e);
-// });
+let data = observable({
+    current: 0
+});
+
+observe(() => {
+    viewport.draw(
+`${data.current === 0? "->":"  "} 小明
+${data.current === 1? "->":"  "} 小张
+${data.current === 2? "->":"  "} 小芳`);
+});
+
+viewport.on('keypress', event => {
+    log(event);
+    let {name} = event.desc;
+    let {current} = data;
+    if(name === "up") {
+        if(current === 0) {
+            data.current = 2;
+        } else {
+            data.current -= 1;
+        }
+    } else if(name === "down") {
+        if(current === 2) {
+            data.current = 0;
+        } else {
+            data.current += 1;
+        }
+    }
+});

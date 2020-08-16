@@ -1,27 +1,21 @@
 let path = require('path');
 const os = require('os');
-const term = require('term-launcher');
 
 const platform = os.platform();
 
 let FIFO_NAME;
-let TERMINAL_LAUNCH_COMMOND;
+let whenTerminalLaunchExec;
 
 if(platform === "darwin" || platform === "linux") {
     FIFO_NAME = "/tmp/yuucli_tokisakiyuu_at_qq_com.sock";
-    TERMINAL_LAUNCH_COMMOND = `reset;node client.js`;
+    whenTerminalLaunchExec = `reset;node client.js`;
 } else if(platform === "win32") {
     FIFO_NAME = path.join('\\\\?\\pipe','\\yuucli_tokisakiyuu_at_qq_com.fifo');
-    TERMINAL_LAUNCH_COMMOND = "node client.js";
-}
-
-// 打开客户端
-function openClient() {
-    term.launchTerminal(TERMINAL_LAUNCH_COMMOND, __dirname);
+    whenTerminalLaunchExec = "node client.js";
 }
 
 
 module.exports = {
     FIFO_NAME,
-    openClient
+    whenTerminalLaunchExec
 }

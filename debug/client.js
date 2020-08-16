@@ -3,7 +3,7 @@ const MuteStream = require('mute-stream');
 const cliCursor = require('cli-cursor');
 const colors = require('colors');
 const { jsonBeautify } = require('beautify-json')
-let {FIFO_NAME} = require('./utils');
+let {FIFO_NAME} = require('./env');
 
 process.title = "YuuCli Debug Terminal";
 

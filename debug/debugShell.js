@@ -1,10 +1,11 @@
 const net = require('net');
 const colors = require('colors');
+const term = require('term-launcher');
 
 const {
-    FIFO_NAME,
-    openClient
-} = require('./utils');
+	FIFO_NAME,
+	whenTerminalLaunchExec
+} = require('./env');
 
 // 只允许一个客户端连接，并且客户端断开时服务端也销毁
 let clientConnected = false;
@@ -22,9 +23,10 @@ let server = net.createServer(connect => {
 	socket = connect;
 	clientConnected = true;
 	flushLogMessageQueue(logMessageQueue);
-}).listen({path: FIFO_NAME}, () => {
-	openClient();
-});
+}).listen(
+	{path: FIFO_NAME},
+	() => openClient(whenTerminalLaunchExec)
+);
 
 server.on("error", err => console.log(`[${colors.gray('DEBUG SERVER')}] ${colors.red(err)}`));
 server.on("close", onClientDisconnectOrProcessExit);
@@ -56,6 +58,11 @@ function flushLogMessageQueue(queue) {
 
 function writeAndFlush(message) {
 	socket.write(message + "\n");
+}
+
+// 打开客户端
+function openClient(commond) {
+    term.launchTerminal(commond, __dirname);
 }
 
 function log(message) {
