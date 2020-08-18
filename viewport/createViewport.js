@@ -2,7 +2,7 @@ const readline = require("readline");
 const cliCursor = require('cli-cursor');
 const MuteStream = require('mute-stream');
 const {bindEventModel} = require('./events');
-const {draw} = require("./draw");
+const {draw, clear} = require("./draw");
 
 function createViewport() {
   const interface = createReadlineInterface();
@@ -13,18 +13,19 @@ function createReadlineInterface() {
   const msStdoout = new MuteStream();
   msStdoout.pipe(process.stdout);
   msStdoout.mute();
-  const rl = readline.createInterface({
+  const interface = readline.createInterface({
     input: process.stdin,
     output: msStdoout,
     prompt: '',
     terminal: true
   });
-  rl.resume();
-  rl.on('SIGINT', () => {
-    rl.close();
+  interface.resume();
+  interface.on('SIGINT', () => {
+    clear(interface);
+    interface.close();
     process.kill(process.pid, 'SIGINT');
   })
-  return rl;
+  return interface;
 }
 
 /**

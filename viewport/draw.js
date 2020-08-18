@@ -20,6 +20,12 @@ function draw(content = "", interface) {
   interface.output.mute();
 }
 
+function clear(interface) {
+  interface.output.unmute();
+  interface.output.write(ansiEscapes.eraseLines(viewportLines));
+  interface.output.mute();
+}
+
 function getContentLines(content) {
   let results = content.match(/\n/g);
   return results
@@ -28,5 +34,6 @@ function getContentLines(content) {
 }
 
 module.exports = {
-  draw
+  draw,
+  clear
 }

@@ -1,24 +1,31 @@
 let viewport = require('../viewport');
 let Screen = require('./screen');
-let {observable, observe} = require('observer-util-wheel');
-
-let data = observable({
-  list: ["张三", "李四", "王五"],
-  current: 0
-});
+let View = require('./view');
+let Rows = require('./rows');
 
 let screen = new Screen("picker");
 
-screen
-  .lines(data.list, (name, index) => {
-    return (data.current === index ? "->" : "  ") + " " + name;
+let pickerView = new View();
+
+pickerView
+  .data({
+    list: ["ZhangSan", "LiSi", "WangWu"],
+    current: 0
+  })
+  .rows(() => {
+    let rows = new Rows();
+    this.list.forEach((name, index) => {
+      rows.addRow((data.current === index ? "->" : "  ") + " " + name);
+    })
+    return rows;
   })
   .row("请选择一个...(按上下键移动)");
 
+screen
+  .useView(pickerView)
+  .update()
 
-observe(() => {
-  viewport.draw(screen.update());
-});
+// observe(() => screen.update());
 
 viewport.on("keypress", event => {
   let {name} = event.desc;
