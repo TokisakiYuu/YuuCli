@@ -1,4 +1,7 @@
-let {observable, observe, raw, isObservable} = require('observer-util-wheel');
+const {
+  rowRender,
+  rowsRender
+} = require('./renders');
 
 const renderPipe = Symbol('render pipe');
 
@@ -8,21 +11,11 @@ class Base {
   [renderPipe] = [];
 
   row(content) {
-    return this.pipe(lineRender, this.data, arguments);
+    return this.pipe(rowRender, arguments);
   }
 
-  rows(handle) {
-    return this.pipe(linesRender, this.data, arguments);
-  }
-
-  // 数据层
-  data(object) {
-    if(isObservable(object)) {
-      this.data = object;
-    } else  {
-      this.data = observable(object);
-    }
-    return this;
+  rows(list, handle) {
+    return this.pipe(rowsRender, arguments);
   }
 
   /**
@@ -30,9 +23,9 @@ class Base {
    * @param {Function} render 渲染函数
    * @param {Array} args 渲染参数
    */
-  pipe(render, thisArg, args) {
+  pipe(render, args) {
     this[renderPipe].push(function $render() {
-      return render.apply(thisArg, args);
+      return render.apply(null, args);
     });
     return this;
   }
@@ -44,25 +37,6 @@ class Base {
     });
     return result;
   }
-}
-
-
-/**
- * 渲染一行内容
- * @param {String} content 一行内容
- */
-function lineRender(content) {
-  let result = content.replace(/\n/g, "");
-  return result + "\n";
-}
-
-/**
- * 渲染多行内容
- * @param {Array} array 数组
- * @param {Function} handle 处理函数
- */
-function linesRender(handle) {
-  return handle.apply(this);
 }
 
 module.exports = Base;

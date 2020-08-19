@@ -1,5 +1,6 @@
 const Base = require("./base");
 const View = require("./view");
+const {viewRender} = require('./renders');
 const {updateToScreen, registerScreen} = require("./screenManager");
 const {observe} = require("observer-util-wheel");
 
@@ -15,26 +16,20 @@ class Screen extends Base {
 
   useView(view) {
     this.pipe(viewRender, arguments);
+    return this;
   }
 
   update() {
     if(this._shouldFristUpdate) {
       let self = this;
-      observe(() => updateToScreen(self));
+      this._update = observe(() => updateToScreen(self));
       this._shouldFristUpdate = false;
     } else {
-      this.update();
+      this._update();
     }
+    return this;
   }
 }
 
-/**
- * 绑定视图渲染器
- * @param {View} view 
- */
-function viewRender(view) {
-  if(!view instanceof View) return "";
-  return view.getRenderResult();
-}
 
 module.exports = Screen;

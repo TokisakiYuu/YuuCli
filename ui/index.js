@@ -1,33 +1,30 @@
 let viewport = require('../viewport');
 let Screen = require('./screen');
 let View = require('./view');
-let Rows = require('./rows');
+let {dataModel} = require('./model');
+let {log} = require('../debug');
 
 let screen = new Screen("picker");
 
+let data = dataModel({
+  list: ["ZhangSan", "LiSi", "WangWu"],
+  current: 0
+});
+
+let q = "hello world";
+
 let pickerView = new View();
-
 pickerView
-  .data({
-    list: ["ZhangSan", "LiSi", "WangWu"],
-    current: 0
+  .rows(data.list, (name, index) => {
+    return (data.current === index ? "->" : "  ") + " " + name;
   })
-  .rows(() => {
-    let rows = new Rows();
-    this.list.forEach((name, index) => {
-      rows.addRow((data.current === index ? "->" : "  ") + " " + name);
-    })
-    return rows;
-  })
-  .row("请选择一个...(按上下键移动)");
-
+  .row(() => q)
 screen
   .useView(pickerView)
   .update()
 
-// observe(() => screen.update());
-
 viewport.on("keypress", event => {
+  log(event);
   let {name} = event.desc;
   let {current} = data;
   let listLength = data.list.length;
@@ -45,5 +42,8 @@ viewport.on("keypress", event => {
       }
   } else if(name === "return") {
     data.list.push("有鱼")
+  } else if(name === "q") {
+    q = "you pressed q";
+    screen.update();
   }
 })
