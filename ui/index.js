@@ -21,7 +21,7 @@ pickerView
   .row(() => q)
 screen
   .useView(pickerView)
-  .update()
+  .show()
 
 viewport.on("keypress", event => {
   log(event);

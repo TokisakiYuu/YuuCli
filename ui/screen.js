@@ -1,7 +1,6 @@
 const Base = require("./base");
-const View = require("./view");
 const {viewRender} = require('./renders');
-const {updateToScreen, registerScreen} = require("./screenManager");
+const {updateToScreen, registerScreen, showScreen} = require("./screenManager");
 const {observe} = require("observer-util-wheel");
 
 class Screen extends Base {
@@ -28,6 +27,11 @@ class Screen extends Base {
       this._update();
     }
     return this;
+  }
+
+  show() {
+    showScreen(this.name);
+    this.update();
   }
 }
 

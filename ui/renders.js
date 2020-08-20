@@ -9,7 +9,7 @@ function rowRender(content) {
   } else {
     result += content;
   }
-  lresult = result.replace(/\n/g, " ");
+  result = result.replace(/\n/g, " ");
   return result.trim() + "\n";
 }
 
