@@ -7,6 +7,14 @@ const List = require("./components/list");
 const Tip = require("./components/tip");
 
 
-const pickerScreen = creatScreen([List, Tip]);
+const pickerScreen = creatScreen({
+  components: [List, Tip],
+  data: {
+    persons: ["ZhangSan", "LiSi", "WangWu"],
+    current: 0
+  }
+});
+
+// console.log(pickerScreen);
 
 pickerScreen.update();

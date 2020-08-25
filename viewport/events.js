@@ -23,7 +23,8 @@ function bindEventModel(interface) {
     on:   (name, handler) => on(name, handler, store),
     once: (name, handler) => once(name, handler, store),
     rm:   (name, handler) => rm(name, handler, store),
-    emit: (name, data)    => emit(name, data, store)
+    emit: (name, data)    => emit(name, data, store),
+    removeAllEventHandler: () => Object.keys(store).forEach(key => Reflect.deleteProperty(store, key))
   }
 }
 
