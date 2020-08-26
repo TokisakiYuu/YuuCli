@@ -1,49 +1,27 @@
-let viewport = require('../viewport');
-let Screen = require('./screen');
-let View = require('./view');
-let {dataModel} = require('./model');
-let {log} = require('../debug');
+const viewport = require("../viewport");
+const Screen = require("./class/Screen");
 
-let screen = new Screen("picker");
+function row(string) {
+  return string.replace(/\n/g, "") + "\n";
+}
 
-let data = dataModel({
-  list: ["ZhangSan", "LiSi", "WangWu"],
-  current: 0
-});
+function space(sum) {
+  if(sum <= 0) return "";
+  return " " + space(sum - 1);
+}
 
-let q = "hello world";
+function creatScreen(options) {
+  return new Screen(options);
+}
 
-let pickerView = new View();
-pickerView
-  .rows(data.list, (name, index) => {
-    return (data.current === index ? "->" : "  ") + " " + name;
-  })
-  .row(() => q)
-screen
-  .useView(pickerView)
-  .show()
+function useKeypressEvent(fn) {
+  viewport.on("keypress", fn);
+}
 
-viewport.on("keypress", event => {
-  log(event);
-  let {name} = event.desc;
-  let {current} = data;
-  let listLength = data.list.length;
-  if(name === "up") {
-    if(current === 0) {
-        data.current = listLength - 1;
-    } else {
-        data.current -= 1;
-    }
-  } else if(name === "down") {
-      if(current === listLength - 1) {
-          data.current = 0;
-      } else {
-          data.current += 1;
-      }
-  } else if(name === "return") {
-    data.list.push("有鱼")
-  } else if(name === "q") {
-    q = "you pressed q";
-    screen.update();
-  }
-})
+module.exports = {
+  row,
+  space,
+  creatScreen,
+  Screen,
+  useKeypressEvent
+}

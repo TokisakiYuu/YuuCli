@@ -1,0 +1,12 @@
+const {creatScreen} = require("../../ui");
+const List = require("../components/list");
+const Tip = require("../components/tip");
+
+
+module.exports = creatScreen({
+  components: [List, Tip],
+  data: {
+    persons: ["ZhangSan", "LiSi", "WangWu"],
+    current: 0
+  }
+});

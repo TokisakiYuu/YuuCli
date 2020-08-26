@@ -9,9 +9,9 @@ class Screen {
 
   update() {
     let {obData} = this;
-    viewport.removeAllEventHandler();
     if(!this._update) {
       this._update = observe(() => {
+        viewport.removeAllEventHandler();
         viewport.draw(
           this.components
             .map(component => {
@@ -19,29 +19,12 @@ class Screen {
               return result;
             })
             .join("")
-        )
+        );
       })
     }else {
       this._update();
     }
   }
-}
-
-function createComponentDesc() {
-  const desc = {};
-  const receiver = {};
-  desc.keypress = {};
-  desc.keypress.on = function(fn) {
-    if(!receiver.keypress) {
-      receiver.keypress = [];
-    }
-    receiver.keypress.push(fn);
-  }
-  desc.keypress.rm = function(fn) {
-    if(!receiver.keypress) return;
-    receiver.keypress = receiver.keypress.filter(handle => handle !== fn);
-  }
-  return {desc, receiver}
 }
 
 module.exports = Screen;
