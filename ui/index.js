@@ -1,6 +1,8 @@
 const viewport = require("../viewport");
 const Screen = require("./class/Screen");
 
+const screens = new Map();
+
 function row(string) {
   return string.replace(/\n/g, "") + "\n";
 }
@@ -11,11 +13,21 @@ function space(sum) {
 }
 
 function creatScreen(options) {
-  return new Screen(options);
+  let screen = new Screen(options);
+  if(options.name) {
+    screens.set(options.name, screen);
+  }
+  return screen;
 }
 
 function useKeypressEvent(fn) {
   viewport.on("keypress", fn);
+}
+
+function gotoScreen(name) {
+  if(!screens.has(name)) return;
+  let screen = screens.get(name);
+  screen.update();
 }
 
 module.exports = {
@@ -23,5 +35,6 @@ module.exports = {
   space,
   creatScreen,
   Screen,
-  useKeypressEvent
+  useKeypressEvent,
+  gotoScreen
 }

@@ -1,4 +1,4 @@
-const {row, space, useKeypressEvent} = require("../../ui");
+const {row, space, useKeypressEvent, gotoScreen} = require("../../ui");
 
 function list(data) {
   let {persons, current} = data;
@@ -18,7 +18,7 @@ function list(data) {
           data.current += 1;
         }
     } else if(name === "return") {
-    
+      gotoScreen("pickerScreen");
     }
   });
   return persons

@@ -1,5 +1,4 @@
-const {row, space, useKeypressEvent} = require("../../ui");
-const pickerScreenCn = require("../screens/pickerScreen_cn");
+const {row, space, useKeypressEvent, gotoScreen} = require("../../ui");
 
 function list(data) {
   let {persons, current} = data;
@@ -19,7 +18,7 @@ function list(data) {
           data.current += 1;
         }
     } else if(name === "return") {
-      pickerScreenCn.update();
+      gotoScreen("pickerScreen_cn");
     }
   });
   return persons

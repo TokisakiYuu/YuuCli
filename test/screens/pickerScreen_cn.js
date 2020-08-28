@@ -4,6 +4,7 @@ const Tip = require("../components/tip_cn");
 
 
 module.exports = creatScreen({
+  name: "pickerScreen_cn",
   components: [List, Tip],
   data: {
     persons: ["张三", "李四", "王五"],
