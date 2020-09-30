@@ -1,4 +1,4 @@
-const {creatScreen} = require("../../ui");
+const {creatScreen} = require("../../index");
 const List = require("../components/list");
 const Tip = require("../components/tip");
 
