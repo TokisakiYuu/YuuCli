@@ -19,6 +19,9 @@ function list(data) {
         }
     } else if(name === "return") {
       gotoScreen("pickerScreen_cn");
+    } else if(name === "space"){
+      console.log("选择了: ", persons[current]);
+      process.exit(0);
     }
   });
   return persons
